@@ -1,12 +1,12 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   experimental: {
     turbo: {
       rules: {
-        "*.svg": {
-          loaders: ["@svgr/webpack"],
-          as: "*.js",
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
         },
       },
     },
@@ -15,10 +15,13 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "*.googleusercontent.com",
+        hostname: '*.googleusercontent.com',
       },
       {
-        hostname: "*.githubusercontent.com",
+        hostname: '*.githubusercontent.com',
+      },
+      {
+        hostname: 'media.rawg.io',
       },
     ],
   },

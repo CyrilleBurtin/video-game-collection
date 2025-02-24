@@ -1,4 +1,5 @@
 import { Header } from '@/components/header/Header';
+import ReactQueryProvider from '@/providers/QueryClientProvider';
 import type { Metadata } from 'next';
 
 import './globals.css';
@@ -16,8 +17,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header />
-        {children}
+        <ReactQueryProvider>
+          <Header />
+          {children}
+        </ReactQueryProvider>
       </body>
     </html>
   );

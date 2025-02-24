@@ -1,5 +1,11 @@
-"use client";
+'use client';
+
+import Link from 'next/link';
 
 export function Header() {
-  return <div>CB</div>;
+  return (
+    <div>
+      <Link href={'/'}>CB</Link>
+    </div>
+  );
 }

@@ -1,6 +1,4 @@
-'use client';
-
-import getToken from '@/components/api/getToken';
+import { getAllGames } from '@/components/api/useGetGames';
 import {
   Card,
   CardContent,
@@ -9,35 +7,55 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { useEffect } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 
-export default function Home() {
-  useEffect(() => {
-    const fetchToken = async () => {
-      try {
-        await getToken();
-      } catch (error) {
-        if (error instanceof Error) console.log(error.message);
-      }
-    };
-    fetchToken();
-  }, []);
+export default async function Home() {
+  const { results } = await getAllGames();
 
   return (
     <div className="">
-      <main className="">
-        <Card>
-          <CardHeader>
-            <CardTitle>Card Title</CardTitle>
-            <CardDescription>Card Description</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>hello</p>
-          </CardContent>
-          <CardFooter>
-            <p>Card Footer</p>
-          </CardFooter>
-        </Card>
+      <main className="grid grid-cols-2 gap-4">
+        {results.map(
+          ({
+            name,
+            id,
+            background_image,
+          }: {
+            name: string;
+            id: number;
+            background_image: string;
+          }) => {
+            return (
+              <Card key={id}>
+                <CardHeader>
+                  <CardTitle>{name}</CardTitle>
+                  <CardDescription>Card Description</CardDescription>
+                </CardHeader>
+                <Link href={`/game-details/${id}`}>
+                  <CardContent
+                    style={{
+                      position: 'relative',
+                      width: '100%',
+                      height: '300px',
+                    }}
+                  >
+                    <Image
+                      src={background_image}
+                      alt="Picture of the author"
+                      fill
+                      style={{ objectFit: 'cover' }}
+                      priority
+                    />
+                  </CardContent>
+                </Link>
+                <CardFooter>
+                  <p>Card Footer</p>
+                </CardFooter>
+              </Card>
+            );
+          },
+        )}
       </main>
       <footer className=""></footer>
     </div>
