@@ -1,18 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
+import { ALL_GAMES } from '@/components/api/apiUrls';
 
 export const getAllGames = async () => {
-  const response = await fetch(
-    `https://api.rawg.io/api/games?key=${process.env.NEXT_PUBLIC_RAWG_API_KEY}`,
-  );
-  const data = await response.json();
-  console.log('toto ::', data);
-  return data;
+  const response = await fetch(ALL_GAMES);
+
+  return response.json();
 };
-
-const useGetAllGames = () =>
-  useQuery({
-    queryKey: ['getGames'],
-    queryFn: getAllGames,
-  });
-
-export default useGetAllGames;

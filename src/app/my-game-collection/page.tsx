@@ -1,6 +1,6 @@
 'use server';
 
-import { Game, getGameDetails } from '@/components/api/useGetGameDetails';
+import getMultipleGamesById from '@/components/api/useGetMultipleGamesById';
 import {
   Card,
   CardContent,
@@ -11,13 +11,8 @@ import {
 import Image from 'next/image';
 import React from 'react';
 
-export default async function GameInfo({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const slug = parseInt((await params).id, 10);
-  const data: Game = await getGameDetails(slug);
+export default async function GameInfo() {
+  const myGames = await getMultipleGamesById();
 
   const game_desc = (desc: string) => {
     if (desc) {
@@ -27,16 +22,16 @@ export default async function GameInfo({
 
   return (
     <div className="grid grid-cols-2 gap-4">
-      {data ? (
-        <Card>
+      {myGames.map((game) => (
+        <Card key={game.name}>
           <CardHeader>
-            <CardTitle>{data.name}</CardTitle>
+            <CardTitle>{game.name}</CardTitle>
             <CardDescription>
-              <div dangerouslySetInnerHTML={game_desc(data.description)} />
+              <div dangerouslySetInnerHTML={game_desc(game.description)} />
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {data.platforms?.map(
+            {game.platforms?.map(
               ({ platform: { name } }: { platform: { name: string } }) => (
                 <p key={name}>{name}</p>
               ),
@@ -50,8 +45,8 @@ export default async function GameInfo({
             }}
           >
             <Image
-              src={data.background_image}
-              alt={data.name}
+              src={game.background_image}
+              alt={game.name}
               fill
               style={{ objectFit: 'cover' }}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -59,9 +54,7 @@ export default async function GameInfo({
             />
           </CardContent>
         </Card>
-      ) : (
-        <p>Loading...</p>
-      )}
+      ))}
     </div>
   );
 }
