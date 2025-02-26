@@ -14,7 +14,6 @@ export async function registerUser(_: unknown, formData: FormData) {
     firstname: formData.get('firstname')?.toString(),
     email: formData.get('email')?.toString(),
     password: formData.get('password')?.toString(),
-    stack: formData.getAll('stack'),
   });
 
   if (!validatedFields.success) {

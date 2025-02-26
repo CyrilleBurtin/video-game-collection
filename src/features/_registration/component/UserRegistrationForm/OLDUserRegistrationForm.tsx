@@ -27,7 +27,6 @@ const UserRegistrationForm = () => {
       name: '',
       email: '',
       password: '',
-      stack: [],
     },
     mode: 'onChange',
   });
