@@ -1,6 +1,6 @@
 'use server';
 
-import { Game, getGameDetails } from '@/components/api/useGetGameDetails';
+import { getGameDetails } from '@/components/api/useGetGameDetails';
 import {
   Card,
   CardContent,
@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { Game } from '@/interfaces/interfaces';
 import Image from 'next/image';
 import React from 'react';
 

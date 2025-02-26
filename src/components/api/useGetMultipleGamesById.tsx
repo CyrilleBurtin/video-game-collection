@@ -3,10 +3,13 @@
 import { GAME_BY_ID } from '@/components/api/apiUrls';
 
 const fetchGamesById = async (id: number) => {
-  const response = await fetch(GAME_BY_ID(id));
-  if (!response.ok) throw new Error(`Erreur pour l'ID ${id}`);
+  try {
+    const response = await fetch(GAME_BY_ID(id));
 
-  return response.json();
+    return response.json();
+  } catch (error) {
+    throw new Error(`An unexpected error occurred while fetching : ${error}`);
+  }
 };
 
 export default async function getMultipleGamesById() {

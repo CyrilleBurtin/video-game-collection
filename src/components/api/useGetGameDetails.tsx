@@ -7,14 +7,6 @@ export async function getGameDetails(id: number): Promise<Game> {
 
     return response.json();
   } catch (error) {
-    if (error instanceof TypeError) {
-      throw new Error('Network error: Unable to fetch game details');
-    } else if (error instanceof SyntaxError) {
-      throw new Error('Invalid response: Unable to parse game data');
-    } else {
-      throw error instanceof Error
-        ? error
-        : new Error('An unexpected error occurred while fetching game details');
-    }
+    throw new Error(`An unexpected error occurred while fetching : ${error}`);
   }
 }

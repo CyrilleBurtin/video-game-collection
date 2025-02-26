@@ -1,4 +1,8 @@
 @import "tailwindcss";
+/*
+  ---break---
+*/
+@custom-variant dark (&:is(.dark *));
 
 @theme {
   --color-background: var(--background);
@@ -22,7 +26,6 @@
     border-color: var(--color-gray-200, currentColor);
   }
 }
-
 
 @layer base {
   :root {
@@ -80,7 +83,6 @@
     --chart-5: 340 75% 55%;
   }
 }
-
 
 :root {
   --background: #ffffff;

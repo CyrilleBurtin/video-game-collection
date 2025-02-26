@@ -1,4 +1,5 @@
-import { Header } from '@/components/header/Header';
+import SessionWrapper from '@/components/SessionWrapper/SessionWrappers';
+import Header from '@/features/header/Header';
 import ReactQueryProvider from '@/providers/QueryClientProvider';
 import type { Metadata } from 'next';
 
@@ -15,13 +16,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        <ReactQueryProvider>
-          <Header />
-          {children}
-        </ReactQueryProvider>
-      </body>
-    </html>
+    <SessionWrapper>
+      <ReactQueryProvider>
+        <html lang="en">
+          <body>
+            <Header />
+            {children}
+          </body>
+        </html>
+      </ReactQueryProvider>
+    </SessionWrapper>
   );
 }

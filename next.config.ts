@@ -15,13 +15,22 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
+        protocol: 'https',
         hostname: '*.googleusercontent.com',
+        port: '',
+        pathname: '**',
       },
       {
+        protocol: 'https',
         hostname: '*.githubusercontent.com',
+        port: '',
+        pathname: '**',
       },
       {
+        protocol: 'https',
         hostname: 'media.rawg.io',
+        port: '',
+        pathname: '**',
       },
     ],
   },
