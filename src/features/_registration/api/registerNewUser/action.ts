@@ -1,10 +1,10 @@
 'use server';
 
 import { userSchema } from '@/features/_registration/schemas/userSchema';
+import { PrismaClient } from '@prisma/client';
+import { revalidatePath } from 'next/cache';
 
-//import { PrismaClient } from '@prisma/client';
-
-//const prisma = new PrismaClient();
+const prisma = new PrismaClient();
 
 export async function registerUser(_: unknown, formData: FormData) {
   console.log('Form Data Received:', Object.fromEntries(formData.entries()));
@@ -20,7 +20,7 @@ export async function registerUser(_: unknown, formData: FormData) {
     throw new Error('Invalid form data');
   }
 
-  /*  try {
+  try {
     const userData = await prisma.user.create({
       data: validatedFields.data,
     });
@@ -31,5 +31,5 @@ export async function registerUser(_: unknown, formData: FormData) {
     throw new Error(`Error: ${error instanceof Error ? error.message : error}`);
   } finally {
     await prisma.$disconnect();
-  }*/
+  }
 }
