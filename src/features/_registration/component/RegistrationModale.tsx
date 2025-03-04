@@ -18,7 +18,9 @@ export default function RegistrationModale() {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Inscription</DialogTitle>
-          <DialogDescription>Inscription</DialogDescription>
+          <DialogDescription>
+            Créez votre compte Video Game Collection
+          </DialogDescription>
         </DialogHeader>
         <UserRegistrationForm />
       </DialogContent>

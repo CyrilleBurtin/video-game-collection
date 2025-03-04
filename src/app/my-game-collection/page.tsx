@@ -1,6 +1,6 @@
 'use server';
 
-import getMultipleGamesById from '@/components/api/useGetMultipleGamesById';
+import getMultipleGamesById from '@/components/api/getMultipleGamesById';
 import {
   Card,
   CardContent,

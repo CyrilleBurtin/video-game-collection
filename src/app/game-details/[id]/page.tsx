@@ -1,6 +1,6 @@
 'use server';
 
-import { getGameDetails } from '@/components/api/useGetGameDetails';
+import { getGameDetails } from '@/components/api/getGameDetails';
 import {
   Card,
   CardContent,
