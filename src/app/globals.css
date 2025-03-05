@@ -101,3 +101,9 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@layer components {
+  .game-grid {
+    @apply m-auto mt-16 grid w-4/5 grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-4;
+  }
+}

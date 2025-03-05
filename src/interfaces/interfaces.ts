@@ -8,5 +8,18 @@ export interface Game {
 
 export interface GameProps {
   game: Game;
-  key?: number; // key est optionnel et géré par React
+  key?: number;
+}
+
+export interface GameSearchResponse {
+  results: Game[];
+}
+
+export interface Store {
+  name: string;
+  image_background: string;
+  domain: string;
+  id: number;
+  games: Game[];
+  slug: string;
 }

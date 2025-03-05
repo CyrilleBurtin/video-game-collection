@@ -1,6 +1,6 @@
-import SessionWrapper from '@/components/SessionWrapper/SessionWrappers';
 import Header from '@/features/header/Header';
 import ReactQueryProvider from '@/providers/QueryClientProvider';
+import SessionWrapper from '@/providers/SessionWrappers';
 import type { Metadata } from 'next';
 
 import './globals.css';

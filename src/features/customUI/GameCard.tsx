@@ -6,11 +6,15 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { GameProps } from '@/interfaces/interfaces';
+import { Game } from '@/interfaces/interfaces';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const GameCard = ({ game }: GameProps) => (
+interface GameCardProps {
+  game: Game;
+}
+
+const GameCard = ({ game }: GameCardProps) => (
   <Card key={game.id}>
     <CardHeader>
       <CardTitle>{game.name}</CardTitle>

@@ -21,7 +21,7 @@ export default async function GameInfo() {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="game-grid">
       {myGames.map((game) => (
         <Card key={game.name}>
           <CardHeader>
