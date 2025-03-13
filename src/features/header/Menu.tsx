@@ -26,9 +26,7 @@ export default function Menu() {
         <ul className="flex items-center gap-4">
           {menuList.map((item) => (
             <NavigationMenuItem key={item.title}>
-              <li>
-                <Link href={item.href}>{item.title}</Link>
-              </li>
+              <Link href={item.href}>{item.title}</Link>
             </NavigationMenuItem>
           ))}
         </ul>

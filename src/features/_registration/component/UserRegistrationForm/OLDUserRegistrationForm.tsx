@@ -10,13 +10,11 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { registerUser } from '@/features/_registration/api/registerNewUser/action';
 import {
   type UserSchemaType,
   userSchema,
 } from '@/features/_registration/schemas/userSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { redirect } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 const UserRegistrationForm = () => {
@@ -32,8 +30,10 @@ const UserRegistrationForm = () => {
   });
 
   const onSubmit = async (formData: UserSchemaType) => {
-    await registerUser(formData, null);
-    redirect('/');
+    console.log(formData);
+
+    //await registerUser(formData, null);
+    //redirect('/');
   };
 
   return (

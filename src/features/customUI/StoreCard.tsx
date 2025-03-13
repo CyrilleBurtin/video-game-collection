@@ -14,7 +14,6 @@ interface StoreCardProps {
 }
 
 const GameCard = ({ store }: StoreCardProps) => {
-  console.log(store);
   return (
     <Card key={store.id}>
       <CardHeader>

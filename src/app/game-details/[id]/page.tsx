@@ -1,15 +1,8 @@
 'use server';
 
 import { getGameDetails } from '@/components/api/getGameDetails';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 import { Game } from '@/interfaces/interfaces';
-import Image from 'next/image';
+import { unixToDate } from '@/lib/utils';
 import React from 'react';
 
 export default async function GameInfo({
@@ -18,51 +11,26 @@ export default async function GameInfo({
   params: Promise<{ id: string }>;
 }) {
   const slug = parseInt((await params).id, 10);
-  const data: Game = await getGameDetails(slug);
-
-  const game_desc = (desc: string) => {
-    if (desc) {
-      return { __html: desc.split('Español')[0] };
-    }
-  };
-
+  const game: Game = await getGameDetails(slug);
+  console.log(game);
   return (
     <div className="game-grid">
-      {data ? (
-        <Card>
-          <CardHeader>
-            <CardTitle>{data.name}</CardTitle>
-            <CardDescription>
-              <div dangerouslySetInnerHTML={game_desc(data.description)} />
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {data.platforms?.map(
-              ({ platform: { name } }: { platform: { name: string } }) => (
-                <p key={name}>{name}</p>
-              ),
-            )}
-          </CardContent>
-          <CardContent
-            style={{
-              position: 'relative',
-              width: '100%',
-              height: '300px',
-            }}
-          >
-            <Image
-              src={data.background_image}
-              alt={data.name}
-              fill
-              style={{ objectFit: 'cover' }}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              priority
-            />
-          </CardContent>
-        </Card>
-      ) : (
-        <p>Loading...</p>
-      )}
+      <div>
+        <p>{game.name}</p>
+        <div>{game.summary}</div>
+        {game?.platforms?.map(({ abbreviation }: { abbreviation: string }) => (
+          <p key={abbreviation}>{abbreviation}</p>
+        ))}
+        <p>{unixToDate(game.first_release_date)}</p>
+        {/*<Image
+          src={`https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${game?.cover?.image_id}.webp`}
+          alt={game.name}
+          fill
+          style={{ objectFit: 'cover' }}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority
+        />*/}
+      </div>
     </div>
   );
 }

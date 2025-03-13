@@ -18,6 +18,7 @@ export default function Header() {
           width="150"
           height="150"
           alt="Logo video game collection représenting controllers"
+          priority
         />
       </Link>
       <Menu />

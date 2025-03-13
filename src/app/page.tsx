@@ -1,11 +1,10 @@
 import GameList from '@/features/gameList/GameList';
-import GameSearch from '@/features/gameSearch/GameSearch';
+import { Suspense } from 'react';
 
 export default async function Home() {
   return (
-    <>
-      <GameSearch />
+    <Suspense fallback={'loading...'}>
       <GameList />
-    </>
+    </Suspense>
   );
 }

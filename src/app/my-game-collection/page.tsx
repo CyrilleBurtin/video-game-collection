@@ -12,7 +12,7 @@ import Image from 'next/image';
 import React from 'react';
 
 export default async function GameInfo() {
-  const myGames = await getMultipleGamesById();
+  const myGames = await getMultipleGamesById([123]);
 
   const game_desc = (desc: string) => {
     if (desc) {
