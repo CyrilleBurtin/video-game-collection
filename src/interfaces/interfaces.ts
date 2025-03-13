@@ -14,12 +14,3 @@ export interface Game {
   slug: string;
   summary: string;
 }
-
-export interface Store {
-  name: string;
-  image_background: string;
-  domain: string;
-  id: number;
-  games: Game[];
-  slug: string;
-}
