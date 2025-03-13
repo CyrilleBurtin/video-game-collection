@@ -1,6 +1,7 @@
 'use server';
 
 import { API_URL, headers } from '@/components/api/apiConfig';
+import { Game } from '@/interfaces/interfaces';
 
 export async function searchGames(gameName: string) {
   try {
@@ -9,8 +10,10 @@ export async function searchGames(gameName: string) {
       release_dates.*,
       first_release_date,
       game_modes.*,
+      game_type.*,
       genres.*,
       id,
+      keywords.*,
       name,
       platforms.*,
       rating,
@@ -20,7 +23,23 @@ export async function searchGames(gameName: string) {
       summary,
       cover.*,
       url;
-      where name ~ *"${gameName}"*;
+      where name ~ *"${gameName}"* 
+      & (game_type.type = "Main Game"
+        | game_type.type = "Remaster"
+        | game_type.type = "expansion"
+        | game_type.type = "bundle"
+        | game_type.type = "standalone_expansion"
+        | game_type.type = "episode"
+        | game_type.type = "season"
+        | game_type.type = "remake"
+        | game_type.type = "remaster"
+        )
+      & platforms.abbreviation != "PC"
+      & platforms.abbreviation != "browser"
+      & platforms.abbreviation != "DOS"
+      & platforms.abbreviation != "Arcade"
+      & cover.url != null
+      & first_release_date != null;
       limit 300;
       sort first_release_date desc;
       `;
@@ -30,8 +49,26 @@ export async function searchGames(gameName: string) {
       headers,
       body: query,
     });
+    const games = await response.json();
 
-    return await response.json();
+    // Filtrer les jeux
+    const filteredGames = games.filter((game: Game) => {
+      // Si pas de keywords, on garde le jeu
+      if (!game.keywords || game.keywords.length === 0) return true;
+
+      // Vérifier chaque keyword
+      return !game.keywords.some((keyword) => {
+        const keywordName = keyword.name.toLowerCase();
+        return (
+          keywordName.includes('unofficial') || keywordName.includes('fangame')
+        );
+      });
+    });
+
+    console.log(`Nombre de jeux avant filtrage : ${games.length}`);
+    console.log(`Nombre de jeux après filtrage : ${filteredGames.length}`);
+
+    return filteredGames;
   } catch (error) {
     console.error('Erreur dans searchGames:', error);
     throw error;

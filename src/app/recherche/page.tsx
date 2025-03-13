@@ -54,17 +54,11 @@ const Search = () => {
           </h2>
           {results.length > 0 ? (
             <ul className="m-auto mt-16 grid w-4/5 grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
-              {results.map((game) => {
-                if (!game.first_release_date || !game.cover) {
-                  return;
-                }
-
-                return (
-                  <li key={game.id}>
-                    <GameCard game={game} />
-                  </li>
-                );
-              })}
+              {results.map((game) => (
+                <li key={game.id}>
+                  <GameCard game={game} />
+                </li>
+              ))}
             </ul>
           ) : (
             <p>Aucun jeu trouvé pour {searchValue}.</p>

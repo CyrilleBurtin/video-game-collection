@@ -3,6 +3,7 @@
 import { getGameDetails } from '@/components/api/getGameDetails';
 import { Game } from '@/interfaces/interfaces';
 import { unixToDate } from '@/lib/utils';
+import Image from 'next/image';
 import React from 'react';
 
 export default async function GameInfo({
@@ -22,14 +23,14 @@ export default async function GameInfo({
           <p key={abbreviation}>{abbreviation}</p>
         ))}
         <p>{unixToDate(game.first_release_date)}</p>
-        {/*<Image
+        <Image
           src={`https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${game?.cover?.image_id}.webp`}
           alt={game.name}
           fill
           style={{ objectFit: 'cover' }}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           priority
-        />*/}
+        />
       </div>
     </div>
   );

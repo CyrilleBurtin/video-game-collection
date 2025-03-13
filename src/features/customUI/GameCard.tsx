@@ -9,6 +9,14 @@ interface GameCardProps {
 
 const GameCard = ({ game }: GameCardProps) => (
   <>
+    <ul className="flex">
+      {game.platforms.map((console) => (
+        <p className="mr-2" key={console.name}>
+          {console.abbreviation}
+        </p>
+      ))}
+    </ul>
+    <p>{game.game_type.type}</p>
     <Link href={`/game-details/${game.id}`}>
       <Card
         key={game.id}
