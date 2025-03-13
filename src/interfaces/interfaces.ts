@@ -15,15 +15,6 @@ export interface Game {
   summary: string;
 }
 
-export interface GameProps {
-  game: Game;
-  key?: number;
-}
-
-export interface GameSearchResponse {
-  results: Game[];
-}
-
 export interface Store {
   name: string;
   image_background: string;
