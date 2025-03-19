@@ -34,6 +34,8 @@ export async function searchGames(gameName: string) {
         | game_type.type = "remake"
         | game_type.type = "remaster"
         )
+      & platforms.abbreviation != "Linux"
+      & platforms.abbreviation != "Mac"
       & platforms.abbreviation != "PC"
       & platforms.abbreviation != "browser"
       & platforms.abbreviation != "DOS"
@@ -48,6 +50,7 @@ export async function searchGames(gameName: string) {
       method: 'POST',
       headers,
       body: query,
+      cache: 'force-cache',
     });
     const games = await response.json();
 

@@ -1,70 +1,70 @@
 'use client';
 
 import { searchGames } from '@/components/api/searchGames';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import GameCard from '@/features/customUI/GameCard';
+import SearchBar from '@/features/search/SearchBar';
 import { Game } from '@/interfaces/interfaces';
-import { FormEvent, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const Search = () => {
-  const [searchValue, setSearchValue] = useState('');
-  const [results, setResults] = useState<Game[] | null>(null);
-  const [isSearching, setIsSearching] = useState(false);
+  const searchParams = useSearchParams();
+  const [gameList, setGameList] = useState<Game[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const q = searchParams.get('q') || '';
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (searchValue.trim() && !isSearching) {
-      setIsSearching(true);
-      try {
-        const games = await searchGames(searchValue);
-        console.log(games);
-        setResults(games);
-      } catch (error) {
-        console.error('Erreur lors de la recherche:', error);
-        setResults([]);
-      } finally {
-        setIsSearching(false);
+  useEffect(() => {
+    const fetchGames = async () => {
+      if (!q) {
+        setGameList([]);
+        return;
       }
-    }
-  };
+
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const games = await searchGames(q);
+        setGameList(games);
+      } catch (err) {
+        setError(`Une erreur est survenue lors de la recherche:${err}`);
+        setGameList([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchGames();
+  }, [q]);
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="game-search" className="sr-only">
-          Rechercher un jeu vidéo
-        </label>
-        <Input
-          type="text"
-          id="game-search"
-          placeholder="Chercher un jeu vidéo"
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.currentTarget.value)}
-          disabled={isSearching}
-        />
-        <Button type="submit" disabled={isSearching}>
-          {isSearching ? 'Recherche...' : 'Rechercher'}
-        </Button>
-      </form>
-      {results && (
+      <SearchBar />
+      {isLoading ? (
+        <p>Chargement...</p>
+      ) : error ? (
+        <p>{error}</p>
+      ) : gameList ? (
         <div>
-          <h2>
-            {results.length} résultats pour : {searchValue}
-          </h2>
-          {results.length > 0 ? (
-            <ul className="m-auto mt-16 grid w-4/5 grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
-              {results.map((game) => (
-                <li key={game.id}>
-                  <GameCard game={game} />
-                </li>
-              ))}
-            </ul>
+          {gameList.length > 0 ? (
+            <>
+              <h2>
+                {gameList.length} résultats pour : {q}
+              </h2>
+              <ul className="m-auto mt-16 grid w-4/5 grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
+                {gameList.map((game) => (
+                  <li key={game.id}>
+                    <GameCard game={game} />
+                  </li>
+                ))}
+              </ul>
+            </>
           ) : (
-            <p>Aucun jeu trouvé pour {searchValue}.</p>
+            <p>Aucun jeu trouvé pour {q}.</p>
           )}
         </div>
-      )}
+      ) : null}
     </div>
   );
 };

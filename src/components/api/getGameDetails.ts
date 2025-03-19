@@ -48,6 +48,7 @@ websites.*
       method: 'post',
       headers,
       body: query,
+      cache: 'force-cache',
     });
 
     const [game] = await response.json();
