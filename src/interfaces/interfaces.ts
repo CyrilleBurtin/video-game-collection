@@ -15,7 +15,12 @@ export interface Game {
   platforms: { abbreviation: string; slug: string; name: string }[];
   rating: number;
   rating_count: number;
-  screenshots: { url: string; height: number; width: number };
+  screenshots: {
+    url: string;
+    height: number;
+    width: number;
+    image_id: number;
+  }[];
   slug: string;
   summary: string;
 }

@@ -34,13 +34,15 @@ export async function searchGames(gameName: string) {
         | game_type.type = "remake"
         | game_type.type = "remaster"
         )
+      & platforms.abbreviation != "Linux"
+      & platforms.abbreviation != "Mac"
       & platforms.abbreviation != "PC"
       & platforms.abbreviation != "browser"
       & platforms.abbreviation != "DOS"
       & platforms.abbreviation != "Arcade"
       & cover.url != null
       & first_release_date != null;
-      limit 300;
+      limit 30;
       sort first_release_date desc;
       `;
 
@@ -48,6 +50,7 @@ export async function searchGames(gameName: string) {
       method: 'POST',
       headers,
       body: query,
+      cache: 'force-cache',
     });
     const games = await response.json();
 

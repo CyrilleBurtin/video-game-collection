@@ -14,23 +14,41 @@ export default async function GameInfo({
   const slug = parseInt((await params).id, 10);
   const game: Game = await getGameDetails(slug);
   console.log(game);
+
   return (
-    <div className="game-grid">
-      <div>
-        <p>{game.name}</p>
-        <div>{game.summary}</div>
-        {game?.platforms?.map(({ abbreviation }: { abbreviation: string }) => (
-          <p key={abbreviation}>{abbreviation}</p>
-        ))}
-        <p>{unixToDate(game.first_release_date)}</p>
+    <div className="m-auto mt-8 w-9/10">
+      <div className="flex gap-8">
         <Image
-          src={`https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${game?.cover?.image_id}.webp`}
+          src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${game?.cover?.image_id}.webp`}
           alt={game.name}
-          fill
-          style={{ objectFit: 'cover' }}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          width={264}
+          height={374}
           priority
+          className="rounded-xl"
         />
+        <div className="flex flex-col gap-4">
+          <p>{game.name}</p>
+          <p>{game.summary}</p>
+          {game?.platforms?.map(
+            ({ abbreviation }: { abbreviation: string }) => (
+              <p key={abbreviation}>{abbreviation}</p>
+            ),
+          )}
+          <p>{unixToDate(game.first_release_date)}</p>
+        </div>
+      </div>
+      <div className="mt-8 grid grid-cols-5 gap-4">
+        {game?.screenshots?.map((screenshot) => (
+          <Image
+            src={`https://images.igdb.com/igdb/image/upload/t_screenshot_big/${screenshot.image_id}.webp`}
+            alt={game.name}
+            width={889}
+            height={500}
+            priority
+            className="rounded-xl"
+            key={screenshot.image_id}
+          />
+        ))}
       </div>
     </div>
   );
