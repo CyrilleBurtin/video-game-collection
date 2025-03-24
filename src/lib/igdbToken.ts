@@ -25,5 +25,7 @@ export async function getCachedToken() {
     const data = await response.json();
     cachedToken = data.access_token;
   }
+  console.log(`Bearer ${cachedToken}`);
+
   return cachedToken;
 }

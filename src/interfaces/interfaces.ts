@@ -23,4 +23,5 @@ export interface Game {
   }[];
   slug: string;
   summary: string;
+  similar_games: { id: string; cover: string; name: string }[];
 }
