@@ -11,14 +11,16 @@ type SearchPageProps = {
 
 export default async function Search({ searchParams }: SearchPageProps) {
   const resolvedSearchParams = (await searchParams) ?? {};
-  const q = resolvedSearchParams.q || '';
+  const searchQuery = resolvedSearchParams.q || '';
+  let searched = false;
 
   let gameList: Game[] = [];
   let error: string | null = null;
 
-  if (q) {
+  if (searchQuery) {
     try {
-      gameList = await searchGames(q as string);
+      gameList = await searchGames(searchQuery as string);
+      searched = true;
     } catch (err) {
       error = `Une erreur est survenue lors de la recherche : ${err}`;
       gameList = [];
@@ -35,7 +37,7 @@ export default async function Search({ searchParams }: SearchPageProps) {
           {gameList.length > 0 ? (
             <>
               <h2>
-                {gameList.length} résultats pour : {q}
+                {gameList.length} résultats pour : {searchQuery}
               </h2>
               <ul className="m-auto mt-16 grid w-4/5 grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
                 {gameList.map((game) => (
@@ -45,9 +47,9 @@ export default async function Search({ searchParams }: SearchPageProps) {
                 ))}
               </ul>
             </>
-          ) : (
-            <p>Aucun jeu trouvé pour {q}.</p>
-          )}
+          ) : searched ? (
+            <p>Aucun jeu trouvé pour ${searchQuery}.</p>
+          ) : null}
         </div>
       ) : null}
     </div>
