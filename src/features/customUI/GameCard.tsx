@@ -8,11 +8,11 @@ interface GameCardProps {
 
 const GameCard = ({ game }: GameCardProps) => (
   <>
-    <ul className="flex">
+    <ul className="flex flex-wrap">
       {game.platforms.map((console) => (
-        <p className="mr-2" key={console.name}>
-          {console.abbreviation}
-        </p>
+        <li className="mr-2" key={console.name}>
+          <p>{console.abbreviation}</p>
+        </li>
       ))}
     </ul>
     <p>{game.game_type.type}</p>

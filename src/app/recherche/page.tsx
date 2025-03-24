@@ -1,49 +1,34 @@
-'use client';
-
 import { searchGames } from '@/components/api/searchGames';
 import GameCard from '@/features/customUI/GameCard';
 import SearchBar from '@/features/search/SearchBar';
 import { Game } from '@/interfaces/interfaces';
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
-const Search = () => {
-  const searchParams = useSearchParams();
-  const [gameList, setGameList] = useState<Game[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const q = searchParams.get('q') || '';
+type SearchPageProps = {
+  searchParams:
+    | Promise<{ [key: string]: string | string[] | undefined }>
+    | undefined;
+};
 
-  useEffect(() => {
-    const fetchGames = async () => {
-      if (!q) {
-        setGameList([]);
-        return;
-      }
+export default async function Search({ searchParams }: SearchPageProps) {
+  const resolvedSearchParams = (await searchParams) ?? {};
+  const q = resolvedSearchParams.q || '';
 
-      setIsLoading(true);
-      setError(null);
+  let gameList: Game[] = [];
+  let error: string | null = null;
 
-      try {
-        const games = await searchGames(q);
-        setGameList(games);
-      } catch (err) {
-        setError(`Une erreur est survenue lors de la recherche:${err}`);
-        setGameList([]);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchGames();
-  }, [q]);
+  if (q) {
+    try {
+      gameList = await searchGames(q as string);
+    } catch (err) {
+      error = `Une erreur est survenue lors de la recherche : ${err}`;
+      gameList = [];
+    }
+  }
 
   return (
     <div>
       <SearchBar />
-      {isLoading ? (
-        <p>Chargement...</p>
-      ) : error ? (
+      {error ? (
         <p>{error}</p>
       ) : gameList ? (
         <div>
@@ -67,6 +52,4 @@ const Search = () => {
       ) : null}
     </div>
   );
-};
-
-export default Search;
+}

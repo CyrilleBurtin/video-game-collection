@@ -54,12 +54,9 @@ export async function searchGames(gameName: string) {
     });
     const games = await response.json();
 
-    // Filtrer les jeux
     const filteredGames = games.filter((game: Game) => {
-      // Si pas de keywords, on garde le jeu
       if (!game.keywords || game.keywords.length === 0) return true;
 
-      // Vérifier chaque keyword
       return !game.keywords.some((keyword) => {
         const keywordName = keyword.name.toLowerCase();
         return (
