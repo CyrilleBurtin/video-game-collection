@@ -1,7 +1,7 @@
 import { API_URL, headers } from '@/components/api/apiConfig';
 import { Game } from '@/interfaces/interfaces';
 
-export async function getGameDetails(id: number): Promise<Game> {
+export async function getGameDetails(slug: string): Promise<Game> {
   const query: string = `fields alternative_names.*,
 artworks.*,
 bundles.*,
@@ -42,7 +42,7 @@ updated_at,
 url,
 videos.*,
 websites.*
-; where id = ${id};`;
+; where slug = "${slug}";`;
   try {
     const response = await fetch(`${API_URL}/games/`, {
       method: 'post',
